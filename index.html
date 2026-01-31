@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noxis Spotify</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet" />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        font-style: italic;
+        background-image: url("img/background.png");
+        background-repeat: no-repeat;
+        height: 1290px;
+  background-position: center;
+  background-size:cover;
+  background-color: #000000;
+      }
+      .container {
+        display: flow-root;
+        background-color: none;
+        position: absolute;
+        top: 460px;
+        left: 40%;
+        font-size: 24px;
+        line-height: 4.3vh;
+        width: 400px;
+        height: 85vh;
+        align-items: center;
+        justify-content: center;
+        animation: bganimation 0.5s;
+      }
+      @keyframes bganimation {
+  0%{
+    opacity: 0;
+    transform: scale(0%, 0%);
+  }
+  100% {
+		opacity: 1;
+		transform: scale(100%, 100%);
+	}
+}
+      .Spoti-link {
+        display: flow-root;
+        padding: 2px;
+        border-radius: 8px;
+        box-shadow: 5px 2px 15px rgba(0, 0, 0, 0.8);
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+        text-shadow: 3px 3px rgba(0, 0, 0, 0.8);
+        margin-left: 10px;
+        text-align: center;
+      }
+      .logo {
+        position: absolute;
+        left: 55px;
+        top: -100px;
+        width: 70%;
+        height: 10%;
+      }
+      .Spoti-link:hover {
+        text-decoration: underline;
+        transition: 250ms;
+        &:hover {
+          scale: 1.1;
+          background: radial-gradient(circle at center, #ec4c4c, #ffc400);
+          opacity: 1;
+        }
+        &:active {
+          scale: 0.9;
+        }
+      }
+      .Headfont {
+        position: absolute;
+        top: -460px;
+        left: 8%;
+        color: white;
+        text-shadow: 3px 3px rgba(0, 0, 0, 0.8);
+        display: flow-root;
+        height: auto;
+      }
+      
+      .profile {
+        position: absolute;
+        left: 8%;
+        top: 70%;
+        width: 80%;
+        object-fit: cover;
+      }
+      /* For desktop: */
+      .col-1 {
+        width: 8.33%;
+      }
+      .col-2 {
+        width: 16.66%;
+      }
+      .col-3 {
+        width: 25%;
+      }
+      .col-4 {
+        width: 33.33%;
+      }
+      .col-5 {
+        width: 41.66%;
+      }
+      .col-6 {
+        width: 50%;
+      }
+      .col-7 {
+        width: 58.33%;
+      }
+      .col-8 {
+        width: 66.66%;
+      }
+      .col-9 {
+        width: 75%;
+      }
+      .col-10 {
+        width: 83.33%;
+      }
+      .col-11 {
+        width: 91.66%;
+      }
+      .col-12 {
+        width: 100%;
+      }
+
+      @media only screen and (min-width: 600px) {
+        /* For tablets: */
+        .col-s-1 {
+          width: 8.33%;
+        }
+        .col-s-2 {
+          width: 16.66%;
+        }
+        .col-s-3 {
+          width: 25%;
+        }
+        .col-s-4 {
+          width: 33.33%;
+        }
+        .col-s-5 {
+          width: 41.66%;
+        }
+        .col-s-6 {
+          width: 50%;
+        }
+        .col-s-7 {
+          width: 58.33%;
+        }
+        .col-s-8 {
+          width: 66.66%;
+        }
+        .col-s-9 {
+          width: 75%;
+        }
+        .col-s-10 {
+          width: 83.33%;
+        }
+        .col-s-11 {
+          width: 91.66%;
+        }
+        .col-s-12 {
+          width: 100%;
+        }
+      }
+
+      @media only screen and (max-width: 768px) {
+        /* For mobile phones: */
+        [class*="col-"] {
+          width: 100%;
+        }
+        .container {
+          display: flow-root;
+          position: absolute;
+          left: 7%;
+        }
+        .Headfont {
+          position: absolute;
+          left: 7%;
+        }
+        .logo {
+          position: absolute;
+          left: 17%;
+        }
+        .profile {
+          position: absolute;
+          left: 10%;
+        }
+      }
+      
+    </style>
+  </head>
+  <body>
+    <audio id="background-music" autoplay loop>
+      <source src="musik.mp3" type="audio/mpeg">
+  </audio>
+
+    <button id="play-music">Musik starten</button>
+    <button id="stop-music">Musik stoppen</button>
+<input type="range" id="volume-control" min="0" max="1" step="0.01" value="1">
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+            const audio = document.getElementById("background-music");
+            const playButton = document.getElementById("play-music");
+            const stopButton = document.getElementById("stop-music");
+            const volumeControl = document.getElementById("volume-control");
+            
+            playButton.addEventListener("click", function () {
+                audio.muted = false; // Stummschaltung aufheben
+                audio.play().catch(error => {
+                    console.log("Autoplay wurde blockiert: " + error);
+                });
+            });
+
+            stopButton.addEventListener("click", function () {
+                audio.pause(); // Musik anhalten
+                audio.currentTime = 0; // Zurück zum Anfang
+            });
+            
+            volumeControl.addEventListener("input", function () {
+                audio.volume = this.value;
+            });
+        });
+  </script>
+    <div class="container">
+      <img class="logo" src="/img/logo.png" />
+      <div>
+        <a
+          class="Spoti-link"
+          href="https://open.spotify.com/playlist/23dUKuY5iTHpEmR9fzjFVs?si=1492c979b7e74aa0"
+          >Chillstep</a
+        >
+        <a
+        class="Spoti-link"
+        href="https://open.spotify.com/playlist/3qvnatkbXVlaVkIUSdOPPw?si=d2f4dbd202cc4738"
+          >Chillwave</a
+        >
+        <a
+        class="Spoti-link"
+        href="https://open.spotify.com/playlist/68Umh2LKhanOyhPjQQwlN5?si=807b34d454b84857"
+          >Cute Tunes</a
+        >
+        <a
+          class="Spoti-link"
+          href="https://open.spotify.com/playlist/6VP5kYibI1mE8jJrLzmuF6?si=08d122bd4b204516"
+          >Dubstep</a
+        >
+        <a
+        class="Spoti-link"
+        href="https://open.spotify.com/playlist/2z20dhSZVg8uSwYwgpFtN0?si=3df17d4d9cc044f4"
+        >Electro</a
+        >
+        <a
+          class="Spoti-link"
+          href="https://open.spotify.com/playlist/7tnLevSfManRfGHaFvpKOk?si=3cf83ce5f4cc42cc"
+          >Gaming Soundtracks & Chill</a
+        >
+        <a
+        class="Spoti-link"
+        href="https://open.spotify.com/playlist/3d3CnPmUO2owwDeuxTQt0K?si=c8f50fcea4b84a1c"
+        >House</a
+        >
+        <a
+          class="Spoti-link"
+          href="https://open.spotify.com/playlist/1TDwVw5evjkGzEl8R5Ig6A?si=35f84756817f44d2"
+          >Japanese Songs</a
+        >
+        <a
+          class="Spoti-link"
+          href="https://open.spotify.com/playlist/5xtaxg9spa6I4j7C3FNySq?si=38f380ee12214ba2"
+          >J-Core</a
+        >        
+        <a
+          class="Spoti-link"
+          href="https://open.spotify.com/playlist/0SAsp1F692Q5mSzLdTzFAH?si=9a4112ab90b545a4"
+          >Lofi</a
+        >
+        <a
+        class="Spoti-link"
+        href="https://open.spotify.com/playlist/7j0uMRrFAjdl6yvEtD9uG0?si=4ba146eda41e4f6c"
+        >Maidcore</a
+        >
+        <a
+        class="Spoti-link"
+        href="https://open.spotify.com/playlist/6J0AI0j3yTHQ9o65PzbABB?si=c0c2dddbf7894f3b"
+        >Mental Fragmentation</a
+        >
+        <a
+          class="Spoti-link"
+          href="https://open.spotify.com/playlist/3S1OnLAIxprjxbePp35FjS?si=30fb4af830744ab6"
+          >Metal</a
+        >
+        <a
+          class="Spoti-link"
+          href="https://open.spotify.com/playlist/1ujgoUBoELenhwTXA4xz4q?si=5f4f98dea34944e0"
+          >Nostalgic and Chill</a
+        >  
+        <a
+          class="Spoti-link"
+          href="https://open.spotify.com/playlist/4fcIYTy3iojBiowilUMtKY?si=d3cdab07f36e40e7"
+          >Party Playlist</a
+        >
+        <a
+          class="Spoti-link"
+          href="https://open.spotify.com/playlist/2bkUiudmJEw6WIRSkUQkqy?si=99d142acce804cfe"
+          >Phonk</a
+        >
+        <a
+        class="Spoti-link"
+        href="https://open.spotify.com/playlist/5Omhn2PczMAZtuxyGbSzMW?si=e1c1460ccda84efc"
+        >Rock</a
+        >                   
+        <a
+          class="Spoti-link"
+          href="https://open.spotify.com/playlist/5OesGeGwmtn2AS9Oc8oyoM?si=06025bd145ff44c4"
+          >Russian Music</a
+        >
+        <a
+          class="Spoti-link"
+          href="https://open.spotify.com/playlist/6qG9JkR3IEM4iVA39gT64Q?si=946d8e31adf14d3b"
+          >Synthwave</a
+        >
+        </div>
+        <div class="Headfont">
+          <h1>Musiksammlung</h1>
+          <img src="/img/Profile.png" class="profile" />         
+        </div>
+      </div>
+    </div>
+    
+  </body>
+</html>
